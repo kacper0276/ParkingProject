@@ -33,4 +33,12 @@ export default class ParkingTicketController {
       });
     }
   }
+
+  async calculateHowMuchToPay(req: Request, res: Response) {
+    const costForOneMinute = 1;
+  }
+
+  async openTheBarrierToLeave(req: Request, res: Response) {}
+
+  async showParkingLotOccupancy(req: Request, res: Response) {}
 }
