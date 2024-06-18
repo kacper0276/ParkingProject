@@ -3,18 +3,22 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./Layout/Header/Header";
 import Footer from "./Layout/Footer/Footer";
 import Layout from "./Layout/Layout";
+import Navigation from "./Layout/partials/Navigation/Navigation";
+import GetTicket from "./Pages/GetTicket/GetTicket";
+import PaymentPage from "./Pages/PaymentPage/PaymentPage";
 
 function App() {
   const header = (
     <Header>
-      <h1>Header</h1>
+      <Navigation />
     </Header>
   );
 
   const content = (
     <>
       <Routes>
-        <Route path="/" element={<h1>Strona główna</h1>} />
+        <Route path="/" element={<GetTicket />} />
+        <Route path="/platnosc/:id" element={<PaymentPage />} />
       </Routes>
     </>
   );
