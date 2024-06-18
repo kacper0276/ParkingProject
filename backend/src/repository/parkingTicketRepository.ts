@@ -67,6 +67,19 @@ class ParkingTicketRepository {
       );
     });
   }
+
+  calculatePayments(id: number): Promise<Date> {
+    return new Promise((resolve, reject) => {
+      connection.query<RowDataPacket[]>(
+        "SELECT date_of_entry FROM tickets WHERE id = ?",
+        [id],
+        (err, res) => {
+          if (err) reject(err);
+          else resolve(res?.[0]?.date_of_entry);
+        }
+      );
+    });
+  }
 }
 
 export default new ParkingTicketRepository();

@@ -17,6 +17,10 @@ class ParkingTicketRoutes {
       this.controller.showParkingLotOccupancy
     );
     this.router.get("/unpayed-tickets", this.controller.getAllUnpayedTickets);
+    this.router.get(
+      "/calculate-cost/:id",
+      this.controller.calculateHowMuchToPay
+    );
   }
 }
 

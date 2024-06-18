@@ -48,6 +48,25 @@ export default class ParkingTicketController {
 
   async calculateHowMuchToPay(req: Request, res: Response) {
     const costForOneMinute = 1;
+    const id = req.params.id;
+
+    try {
+      const timeEntry = await parkingTicketRepository.calculatePayments(+id);
+      const timeNow = new Date();
+
+      const diffInMilliseconds = timeNow.getTime() - timeEntry.getTime();
+      const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+
+      const totalCost = diffInMinutes * costForOneMinute;
+
+      res
+        .status(200)
+        .send({ timeEntry, timeNow, totalCost: `${totalCost} zł` });
+    } catch (err) {
+      res.status(500).send({
+        message: "Błąd",
+      });
+    }
   }
 
   async openTheBarrierToLeave(req: Request, res: Response) {}
