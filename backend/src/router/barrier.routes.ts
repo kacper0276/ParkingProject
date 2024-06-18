@@ -15,4 +15,4 @@ class BarrierRoutes {
   }
 }
 
-export default new BarrierRoutes();
+export default new BarrierRoutes().router;
