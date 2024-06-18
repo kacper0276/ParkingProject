@@ -12,6 +12,11 @@ class ParkingTicketRoutes {
   initializeRouter() {
     this.router.post("/", this.controller.create);
     this.router.get("/", this.controller.getAllTickets);
+    this.router.get(
+      "/calculate-occupacy",
+      this.controller.showParkingLotOccupancy
+    );
+    this.router.get("/unpayed-tickets", this.controller.getAllUnpayedTickets);
   }
 }
 

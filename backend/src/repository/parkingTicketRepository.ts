@@ -1,6 +1,6 @@
 import IParkingTicket from "../models/parkingTicket";
 import connection from "../helpers/databaseConnection";
-import { ResultSetHeader } from "mysql2";
+import { ResultSetHeader, RowDataPacket } from "mysql2";
 
 class ParkingTicketRepository {
   getAll(): Promise<IParkingTicket[]> {
@@ -39,6 +39,30 @@ class ParkingTicketRepository {
             this.getById(res.insertId)
               .then((ticket) => resolve(ticket!))
               .catch(reject);
+        }
+      );
+    });
+  }
+
+  calculateOccupiedParkingSpaces(): Promise<number> {
+    return new Promise((resolve, reject) => {
+      connection.query<RowDataPacket[]>(
+        "SELECT COUNT(*) as occupacy FROM tickets WHERE paid = false",
+        (err, res) => {
+          if (err) reject(err);
+          else resolve(res?.[0]?.occupacy || 0);
+        }
+      );
+    });
+  }
+
+  getListUnpayedTickets(): Promise<IParkingTicket[]> {
+    return new Promise((resolve, reject) => {
+      connection.query<IParkingTicket[]>(
+        "SELECT * FROM tickets WHERE paid = false",
+        (err, res) => {
+          if (err) reject(err);
+          else resolve(res);
         }
       );
     });

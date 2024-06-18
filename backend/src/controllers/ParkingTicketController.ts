@@ -34,11 +34,35 @@ export default class ParkingTicketController {
     }
   }
 
+  async getAllUnpayedTickets(req: Request, res: Response) {
+    try {
+      const tickets = await parkingTicketRepository.getListUnpayedTickets();
+
+      res.status(200).send(tickets);
+    } catch (error) {
+      res.status(500).send({
+        message: "Błąd",
+      });
+    }
+  }
+
   async calculateHowMuchToPay(req: Request, res: Response) {
     const costForOneMinute = 1;
   }
 
   async openTheBarrierToLeave(req: Request, res: Response) {}
 
-  async showParkingLotOccupancy(req: Request, res: Response) {}
+  async showParkingLotOccupancy(req: Request, res: Response) {
+    const max = 20;
+    try {
+      const occupacy =
+        await parkingTicketRepository.calculateOccupiedParkingSpaces();
+
+      res.status(200).send({ actual: occupacy, max });
+    } catch (error) {
+      res.status(500).send({
+        message: "Błąd",
+      });
+    }
+  }
 }

@@ -9,8 +9,10 @@ export default class Server {
   }
 
   private config(app: Application): void {
+    const allowedOrigins = ["http://localhost:5173"];
+
     const corsOptions: CorsOptions = {
-      origin: "http://localhost:3000",
+      origin: allowedOrigins,
     };
 
     app.use(cors(corsOptions));
