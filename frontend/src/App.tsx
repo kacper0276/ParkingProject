@@ -7,6 +7,8 @@ import Navigation from "./Layout/partials/Navigation/Navigation";
 import GetTicket from "./Pages/GetTicket/GetTicket";
 import PaymentPage from "./Pages/PaymentPage/PaymentPage";
 
+export const API_URL = "http://localhost:3001/api/tickets";
+
 function App() {
   const header = (
     <Header>
