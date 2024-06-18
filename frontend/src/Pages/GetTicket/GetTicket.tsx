@@ -27,14 +27,24 @@ export default function GetTicket() {
     fetchActualOccupacy();
   }, []);
 
+  const freeSeats = actualOccupacy
+    ? actualOccupacy.max - actualOccupacy.actual
+    : "-";
+
   return (
     <div className={`${styles.main_container}`}>
-      <h1>
-        Ilość wolnych miejsc:{" "}
-        {actualOccupacy ? actualOccupacy.max - actualOccupacy.actual : "-"}
-      </h1>
+      <h1>Ilość wolnych miejsc: {freeSeats}</h1>
       <strong>Pobierz bilet</strong>
-      <button>Klik</button>
+      <button
+        className={`${styles.button}`}
+        disabled={
+          actualOccupacy
+            ? actualOccupacy.max - actualOccupacy.actual <= 0
+            : true
+        }
+      >
+        Klik
+      </button>
     </div>
   );
 }
