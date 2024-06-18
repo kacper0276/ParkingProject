@@ -3,7 +3,9 @@ import { createConnection, Connection } from "mysql2";
 const connection: Connection = createConnection({
   host: "localhost",
   user: "root",
-  database: "shop",
+  password: "root",
+  database: "parking",
+  port: 3307,
   multipleStatements: true,
 });
 

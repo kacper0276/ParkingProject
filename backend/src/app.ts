@@ -1,14 +1,20 @@
 import express, { Application } from "express";
-import cors from "cors";
-import route from "./router/web";
+import cors, { CorsOptions } from "cors";
+import Routes from "./router";
 
-const app: Application = express();
+export default class Server {
+  constructor(app: Application) {
+    this.config(app);
+    new Routes(app);
+  }
 
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
-app.use(express.json());
+  private config(app: Application): void {
+    const corsOptions: CorsOptions = {
+      origin: "http://localhost:3000",
+    };
 
-// Mount routes
-app.use(route);
-
-export default app;
+    app.use(cors(corsOptions));
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+  }
+}
