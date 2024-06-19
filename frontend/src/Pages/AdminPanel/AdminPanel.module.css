@@ -6,3 +6,13 @@
     flex-direction: column;
     gap: 20px;
 }
+
+.table {
+    border: 1px solid white;
+    width: 80%;
+    border-collapse: collapse;
+}
+
+.table tr, .table td, .table th {
+    border: 1px solid white;
+}

@@ -27,8 +27,8 @@ export default function AdminPanel() {
 
   return (
     <div className={`${styles.main_container}`}>
-      <p>Listy</p>
-      <table>
+      <p>Lista zajętych miejsc parkingowych</p>
+      <table className={`${styles.table}`}>
         <thead>
           <tr>
             <th>ID</th>
