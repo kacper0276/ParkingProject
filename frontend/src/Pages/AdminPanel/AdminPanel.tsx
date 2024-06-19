@@ -76,7 +76,7 @@ export default function AdminPanel() {
                   <td>
                     {ticket.registration_number != null
                       ? ticket.registration_number
-                      : "Brak"}
+                      : "Nie podano"}
                   </td>
                   <td>{cutTime(ticket.date_of_entry)}</td>
                   <td>
