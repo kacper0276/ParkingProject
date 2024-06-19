@@ -118,6 +118,7 @@ export default class ParkingTicketController {
     const ticketPayment = await parkingTicketRepository.getById(+req.params.id);
 
     if (ticketPayment?.payment_date != null) {
+      // Sprawdzenie czy czas poniżej 15 minut TODO:
       await parkingTicketRepository.setLeaveParkingTime(+req.params.id);
       res.status(200).send({ message: "Otwarto szlaban" });
     } else {
