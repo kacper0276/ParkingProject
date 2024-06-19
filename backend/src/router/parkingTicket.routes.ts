@@ -21,6 +21,8 @@ class ParkingTicketRoutes {
       "/calculate-cost/:id",
       this.controller.calculateHowMuchToPay
     );
+    this.router.get("/pay-for-ticket/:id", this.controller.payForParking);
+    this.router.get("/open-barrier/:id", this.controller.openTheBarrierToLeave);
   }
 }
 

@@ -31,7 +31,7 @@ class ParkingTicketRepository {
   createTicket(tickedData: IParkingTicket): Promise<IParkingTicket> {
     return new Promise((resolve, reject) => {
       connection.query<ResultSetHeader>(
-        "INSERT INTO tickets (registration_number, date_of_entry, departure_date, paid) VALUES(?, ?, null, false)",
+        "INSERT INTO tickets (registration_number, date_of_entry, departure_date, payment_date) VALUES(?, ?, null, null)",
         [tickedData.registration_number, new Date()],
         (err, res) => {
           if (err) reject(err);
@@ -47,7 +47,7 @@ class ParkingTicketRepository {
   calculateOccupiedParkingSpaces(): Promise<number> {
     return new Promise((resolve, reject) => {
       connection.query<RowDataPacket[]>(
-        "SELECT COUNT(*) as occupacy FROM tickets WHERE paid = false",
+        "SELECT COUNT(*) as occupacy FROM tickets WHERE payment_date IS NULL",
         (err, res) => {
           if (err) reject(err);
           else resolve(res?.[0]?.occupacy || 0);
@@ -59,7 +59,7 @@ class ParkingTicketRepository {
   getListUnpayedTickets(): Promise<IParkingTicket[]> {
     return new Promise((resolve, reject) => {
       connection.query<IParkingTicket[]>(
-        "SELECT * FROM tickets WHERE paid = false",
+        "SELECT * FROM tickets WHERE payment_date IS NULL",
         (err, res) => {
           if (err) reject(err);
           else resolve(res);
@@ -76,6 +76,32 @@ class ParkingTicketRepository {
         (err, res) => {
           if (err) reject(err);
           else resolve(res?.[0]?.date_of_entry);
+        }
+      );
+    });
+  }
+
+  payForParking(id: number): Promise<string> {
+    return new Promise((resolve, reject) => {
+      connection.query<RowDataPacket[]>(
+        "UPDATE tickets SET payment_date=? WHERE id = ?",
+        [new Date(), id],
+        (err, res) => {
+          if (err) reject(err);
+          else resolve("Zapłacono za parking");
+        }
+      );
+    });
+  }
+
+  setLeaveParkingTime(id: number): Promise<string> {
+    return new Promise((resolve, reject) => {
+      connection.query<RowDataPacket[]>(
+        "UPDATE tickets SET departure_date=? WHERE id=?",
+        [new Date(), id],
+        (err, res) => {
+          if (err) reject(err);
+          else resolve("Ustawiono datę wyjazdu");
         }
       );
     });

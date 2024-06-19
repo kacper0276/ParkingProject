@@ -5,5 +5,5 @@ export default interface IParkingTicket extends RowDataPacket {
   registration_number?: string;
   date_of_entry?: Date;
   departure_date?: Date;
-  paid?: boolean;
+  payment_date?: Date;
 }
