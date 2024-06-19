@@ -9,8 +9,7 @@ export default class ParkingTicketController {
   constructor() {
     this.showParkingLotOccupancy = this.showParkingLotOccupancy.bind(this);
     this.create = this.create.bind(this);
-    // setInterval(this.checkIfClientGetOutAfter15Minutes, 10 * 60 * 1000);
-    this.checkIfClientGetOutAfter15Minutes();
+    setInterval(this.checkIfClientGetOutAfter15Minutes, 10 * 60 * 1000);
   }
 
   async create(req: Request, res: Response) {
