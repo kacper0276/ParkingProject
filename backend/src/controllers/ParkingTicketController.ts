@@ -92,10 +92,10 @@ export default class ParkingTicketController {
       if (paymentDate) {
         const timeDiff = now.getTime() - paymentDate.getTime();
         const minutesDiff = Math.floor(timeDiff / (1000 * 60));
-        if (minutesDiff > 15) {
-          console.log(
-            `More than 15 minutes have passed since payment for ticket ID ${ticket.id}.`
-          );
+        if (minutesDiff > 15 && ticket.id) {
+          paymentDate.setMinutes(paymentDate.getMinutes() + 15);
+
+          parkingTicketRepository.startNewCounting(+ticket.id, paymentDate);
         }
       }
     });

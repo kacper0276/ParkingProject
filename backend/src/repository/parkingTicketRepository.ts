@@ -80,6 +80,19 @@ class ParkingTicketRepository {
     });
   }
 
+  startNewCounting(id: number, paymentDate: Date): Promise<string> {
+    return new Promise((resolve, reject) => {
+      connection.query<RowDataPacket[]>(
+        "UPDATE tickets SET payment_date=?, date_of_entry=? WHERE id=?",
+        [null, paymentDate, id],
+        (err, res) => {
+          if (err) reject(err);
+          else resolve("Zmieniono");
+        }
+      );
+    });
+  }
+
   calculatePayments(id: number): Promise<Date> {
     return new Promise((resolve, reject) => {
       connection.query<RowDataPacket[]>(
