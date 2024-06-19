@@ -4,10 +4,13 @@ import parkingTicketRepository from "../repository/parkingTicketRepository";
 import barrierController from "./BarrierController";
 
 export default class ParkingTicketController {
-  max = 20;
+  max = 9;
 
   constructor() {
     this.showParkingLotOccupancy = this.showParkingLotOccupancy.bind(this);
+    this.create = this.create.bind(this);
+    // setInterval(this.checkIfClientGetOutAfter15Minutes, 10 * 60 * 1000);
+    this.checkIfClientGetOutAfter15Minutes();
   }
 
   async create(req: Request, res: Response) {
@@ -69,13 +72,33 @@ export default class ParkingTicketController {
       const totalCost = diffInMinutes * costForOneMinute;
 
       res.status(200).send({ totalCost: `${totalCost} zł` });
-
-      setTimeout(() => this.checkIfPayment(+id), 15 * 60 * 1000);
     } catch (err) {
       res.status(500).send({
         message: "Błąd",
       });
     }
+  }
+
+  async checkIfClientGetOutAfter15Minutes() {
+    const resp =
+      await parkingTicketRepository.getListPayedTicketsAndClientNotOut();
+
+    resp.forEach((ticket) => {
+      const now = new Date();
+      const paymentDate = ticket.payment_date
+        ? new Date(ticket.payment_date)
+        : undefined;
+
+      if (paymentDate) {
+        const timeDiff = now.getTime() - paymentDate.getTime();
+        const minutesDiff = Math.floor(timeDiff / (1000 * 60));
+        if (minutesDiff > 15) {
+          console.log(
+            `More than 15 minutes have passed since payment for ticket ID ${ticket.id}.`
+          );
+        }
+      }
+    });
   }
 
   async payForParking(req: Request, res: Response) {
@@ -89,14 +112,6 @@ export default class ParkingTicketController {
       res.status(500).send({
         message: "Nastąpił błąd",
       });
-    }
-  }
-
-  async checkIfPayment(id: number) {
-    try {
-      console.log(`Completing payment for ticket with ID: ${id}`);
-    } catch (error) {
-      console.error("Error completing payment:", error);
     }
   }
 

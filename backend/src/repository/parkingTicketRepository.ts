@@ -68,6 +68,18 @@ class ParkingTicketRepository {
     });
   }
 
+  getListPayedTicketsAndClientNotOut(): Promise<IParkingTicket[]> {
+    return new Promise((resolve, reject) => {
+      connection.query<IParkingTicket[]>(
+        "SELECT * FROM tickets WHERE payment_date IS NOT NULL AND departure_date IS NULL",
+        (err, res) => {
+          if (err) reject(err);
+          else resolve(res);
+        }
+      );
+    });
+  }
+
   calculatePayments(id: number): Promise<Date> {
     return new Promise((resolve, reject) => {
       connection.query<RowDataPacket[]>(
