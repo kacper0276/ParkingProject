@@ -6,6 +6,7 @@ import Layout from "./Layout/Layout";
 import Navigation from "./Layout/partials/Navigation/Navigation";
 import GetTicket from "./Pages/GetTicket/GetTicket";
 import PaymentPage from "./Pages/PaymentPage/PaymentPage";
+import AdminPanel from "./Pages/AdminPanel/AdminPanel";
 
 export const API_URL = "http://localhost:3001/api/tickets";
 
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<GetTicket />} />
         <Route path="/platnosc/:id" element={<PaymentPage />} />
+        <Route path="/panel-admina" element={<AdminPanel />} />
       </Routes>
     </>
   );

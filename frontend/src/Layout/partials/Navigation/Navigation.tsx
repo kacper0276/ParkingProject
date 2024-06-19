@@ -31,11 +31,8 @@ export default function Navigation() {
           </Link>
         </li>
         <li className={`${styles.navigation_element}`}>
-          <Link
-            to={"/paneluzytkownika"}
-            className={`${styles.navigation_link}`}
-          >
-            Twój panel
+          <Link to={"/panel-admina"} className={`${styles.navigation_link}`}>
+            Panel administratora
           </Link>
         </li>
       </ul>
