@@ -23,6 +23,26 @@ export default function GetTicket() {
     }
   };
 
+  const getTicket = async () => {
+    try {
+      await axios.post(`${API_URL}/`, {}).then((res) => {
+        alert(res.data.message);
+        fetchActualOccupacy();
+      });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          alert(error.response.data.message);
+        } else {
+          alert("An unexpected error occurred");
+        }
+      } else {
+        console.log(error);
+        alert("An unknown error occurred");
+      }
+    }
+  };
+
   useEffect(() => {
     fetchActualOccupacy();
   }, []);
@@ -42,6 +62,7 @@ export default function GetTicket() {
             ? actualOccupacy.max - actualOccupacy.actual <= 0
             : true
         }
+        onClick={getTicket}
       >
         Klik
       </button>
