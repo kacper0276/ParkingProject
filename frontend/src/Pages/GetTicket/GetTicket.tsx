@@ -3,7 +3,7 @@ import styles from "./GetTicket.module.css";
 import { API_URL } from "../../App";
 import { useEffect, useState } from "react";
 
-interface OccupacyData {
+export interface OccupacyData {
   max: number;
   actual: number;
 }

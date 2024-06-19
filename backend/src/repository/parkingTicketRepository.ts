@@ -47,7 +47,7 @@ class ParkingTicketRepository {
   calculateOccupiedParkingSpaces(): Promise<number> {
     return new Promise((resolve, reject) => {
       connection.query<RowDataPacket[]>(
-        "SELECT COUNT(*) as occupacy FROM tickets WHERE payment_date IS NULL",
+        "SELECT COUNT(*) as occupacy FROM tickets WHERE departure_date IS NULL",
         (err, res) => {
           if (err) reject(err);
           else resolve(res?.[0]?.occupacy || 0);
@@ -59,7 +59,7 @@ class ParkingTicketRepository {
   getListUnpayedTickets(): Promise<IParkingTicket[]> {
     return new Promise((resolve, reject) => {
       connection.query<IParkingTicket[]>(
-        "SELECT * FROM tickets WHERE payment_date IS NULL",
+        "SELECT * FROM tickets WHERE departure_date IS NULL",
         (err, res) => {
           if (err) reject(err);
           else resolve(res);
