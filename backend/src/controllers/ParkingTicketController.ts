@@ -118,9 +118,26 @@ export default class ParkingTicketController {
     const ticketPayment = await parkingTicketRepository.getById(+req.params.id);
 
     if (ticketPayment?.payment_date != null) {
-      // Sprawdzenie czy czas poniżej 15 minut TODO:
-      await parkingTicketRepository.setLeaveParkingTime(+req.params.id);
-      res.status(200).send({ message: "Otwarto szlaban" });
+      const paymentDate = ticketPayment.payment_date;
+      const timeDiff = new Date().getTime() - paymentDate.getTime();
+      const minutesDiff = Math.floor(timeDiff / (1000 * 60));
+
+      if (minutesDiff <= 15) {
+        await parkingTicketRepository.setLeaveParkingTime(+req.params.id);
+
+        res.status(200).send({ message: "Otwarto szlaban" });
+      } else {
+        paymentDate.setMinutes(paymentDate.getMinutes() + 15);
+
+        await parkingTicketRepository.startNewCounting(
+          +(ticketPayment?.id ?? 0),
+          paymentDate
+        );
+
+        res.status(500).send({
+          message: "Minęło więcej niż 15 minut od opłacenia parkingu",
+        });
+      }
     } else {
       res.status(500).send({ message: "By wyjechać opłać bilet" });
     }
