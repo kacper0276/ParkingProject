@@ -10,7 +10,7 @@ class BarrierController extends EventEmitter {
     if (res) {
       return res.status(200).send({ message: "Otwarto szlaban" });
     } else {
-      console.log("Otwarto szlaban (event triggered)");
+      console.log("Otwarto szlaban");
     }
   }
 
@@ -18,7 +18,7 @@ class BarrierController extends EventEmitter {
     if (res) {
       return res.status(200).send({ message: "Zamknięto szlaban" });
     } else {
-      console.log("Zamknięto szlaban (event triggered)");
+      console.log("Zamknięto szlaban");
     }
   }
 
