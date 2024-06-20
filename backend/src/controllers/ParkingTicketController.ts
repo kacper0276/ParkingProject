@@ -26,6 +26,10 @@ export default class ParkingTicketController {
       await parkingTicketRepository.createTicket(ticket);
 
       barrierController.emitOpenBarrier(req, res);
+
+      setTimeout(() => {
+        barrierController.emitCloseBarrier();
+      }, 15 * 1000);
     } catch (err) {
       res.status(500).send({
         message: "Błąd, nie można pobrać biletu",
@@ -126,6 +130,10 @@ export default class ParkingTicketController {
         await parkingTicketRepository.setLeaveParkingTime(+req.params.id);
 
         barrierController.emitOpenBarrier(req, res);
+
+        setTimeout(() => {
+          barrierController.emitCloseBarrier();
+        }, 15 * 1000);
       } else {
         paymentDate.setMinutes(paymentDate.getMinutes() + 15);
 

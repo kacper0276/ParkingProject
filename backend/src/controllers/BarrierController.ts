@@ -14,12 +14,20 @@ class BarrierController extends EventEmitter {
     }
   }
 
-  async closeBarrier(req: Request, res: Response) {
-    return res.status(200).send({ message: "Zamknięto szlaban" });
+  async closeBarrier(req: Request, res?: Response) {
+    if (res) {
+      return res.status(200).send({ message: "Zamknięto szlaban" });
+    } else {
+      console.log("Zamknięto szlaban (event triggered)");
+    }
   }
 
-  emitOpenBarrier(req: Request, res: Response) {
+  emitOpenBarrier(req?: Request, res?: Response) {
     this.emit("openBarrier", req, res);
+  }
+
+  emitCloseBarrier() {
+    this.emit("closeBarrier");
   }
 }
 

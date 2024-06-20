@@ -12,6 +12,10 @@ app.listen(PORT, () => {
   console.log(`Serwer słucha na porcie: ${PORT}`);
 });
 
-barrierController.on("openBarrier", (req: Request, res: Response) => {
+barrierController.on("openBarrier", (req?: Request, res?: Response) => {
   barrierController.openBarrier(req, res);
+});
+
+barrierController.on("closeBarrier", (req: Request, res: Response) => {
+  barrierController.closeBarrier(req, res);
 });
