@@ -1,8 +1,6 @@
 <h1>Parking management project</h1>
 <hr><h2>General Information</h2>
-<hr><ul>
-<li></li>
-</ul>
+<hr>
 <p>It is an application that uses Node.JS and React, it is used to manage the parking lot and helps with that.</p><ul>
 <li>The primary problem the project solves is the inefficient use and management of parking spaces.</li>
 </ul><h2>Technologies Used</h2>
