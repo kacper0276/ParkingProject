@@ -3,21 +3,14 @@ import styles from "./AdminPanel.module.css";
 import axios from "axios";
 import { API_URL } from "../../App";
 import cutTime from "../../helpers/cutTime";
-import { OccupacyData } from "../GetTicket/GetTicket";
-
-interface Tickets {
-  id: number;
-  registration_number?: string;
-  date_of_entry: Date;
-  departure_date?: Date;
-  payment_date?: Date;
-}
+import ITicket from "../../types/tickets.type";
+import IOccupacyData from "../../types/occupacy.type";
 
 export default function AdminPanel() {
-  const [activeTickets, setActiveTickets] = useState<Tickets[]>([]);
-  const [allTickets, setAllTickets] = useState<Tickets[]>([]);
+  const [activeTickets, setActiveTickets] = useState<ITicket[]>([]);
+  const [allTickets, setAllTickets] = useState<ITicket[]>([]);
   const [actualOccupacy, setActualOccupacy] = useState<
-    OccupacyData | undefined
+    IOccupacyData | undefined
   >();
 
   const fetchActiveTickets = async () => {

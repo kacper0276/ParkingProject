@@ -2,15 +2,11 @@ import axios from "axios";
 import styles from "./GetTicket.module.css";
 import { API_URL } from "../../App";
 import { useEffect, useState } from "react";
-
-export interface OccupacyData {
-  max: number;
-  actual: number;
-}
+import IOccupacyData from "../../types/occupacy.type";
 
 export default function GetTicket() {
   const [actualOccupacy, setActualOccupacy] = useState<
-    OccupacyData | undefined
+    IOccupacyData | undefined
   >();
 
   const fetchActualOccupacy = async () => {

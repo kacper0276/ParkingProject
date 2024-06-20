@@ -3,10 +3,7 @@ import styles from "./PaymentPage.module.css";
 import axios from "axios";
 import { API_URL } from "../../App";
 import { useEffect, useState } from "react";
-
-interface ICost {
-  totalCost: string;
-}
+import ICost from "../../types/cost.type";
 
 export default function PaymentPage() {
   const { id } = useParams();
