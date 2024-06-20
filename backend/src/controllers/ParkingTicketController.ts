@@ -125,7 +125,7 @@ export default class ParkingTicketController {
       if (minutesDiff <= 15) {
         await parkingTicketRepository.setLeaveParkingTime(+req.params.id);
 
-        res.status(200).send({ message: "Otwarto szlaban" });
+        barrierController.emitOpenBarrier(req, res);
       } else {
         paymentDate.setMinutes(paymentDate.getMinutes() + 15);
 
